@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cctype>
 #include <string>
+#include <msclr/marshal_cppstd.h>
+#include <regex>
 #include "Ride.h"
 
 namespace OpenRidesPrediction {
@@ -75,6 +77,7 @@ namespace OpenRidesPrediction {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
@@ -239,6 +242,7 @@ namespace OpenRidesPrediction {
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MyForm";
 			this->Text = L"OpenRidesPrediction v2.0.0";
 			this->ResumeLayout(false);
@@ -280,8 +284,12 @@ private: System::Void prediction_button_Click(System::Object^ sender, System::Ev
 			break;
 		}
 	}
-	if (onlyDigitsTmin == false) {
-		MessageBox::Show(L"De minimumtemperatuur kan enkel een geheel getal zijn en mag daarom geen letters of andere tekens bevatten!", L"Error: foutieve input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+
+	string min_temp_str_standstr = msclr::interop::marshal_as<std::string>(min_temp_str); //convert to std::string to search for the minus sign to allow negative temperatures as well
+	regex pattern("^-[0-9]+$");
+
+	if (onlyDigitsTmin == false && !regex_search(min_temp_str_standstr, pattern)) {
+		MessageBox::Show(L"De minimumtemperatuur kan enkel een geheel getal zijn en mag daarom geen letters of andere tekens (uitgezonderd het minteken voor negatieve temperaturen) bevatten!", L"Error: foutieve input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
 
@@ -293,7 +301,8 @@ private: System::Void prediction_button_Click(System::Object^ sender, System::Ev
 			break;
 		}
 	}
-	if (onlyDigitsTmax == false) {
+	string max_temp_str_standstr = msclr::interop::marshal_as<std::string>(max_temp_str);
+	if (onlyDigitsTmax == false && !regex_search(max_temp_str_standstr, pattern)) {
 		MessageBox::Show(L"De maximumtemperatuur kan enkel een geheel getal zijn en mag daarom geen letters of andere tekens bevatten!", L"Error: foutieve input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
@@ -307,7 +316,7 @@ private: System::Void prediction_button_Click(System::Object^ sender, System::Ev
 		}
 	}
 	if (onlyDigitswind == false) {
-		MessageBox::Show(L"De windkracht kan enkel een geheel getal zijn en mag daarom geen letters of andere tekens bevatten!", L"Error: foutieve input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		MessageBox::Show(L"De windkracht kan enkel een positief geheel getal zijn en mag daarom geen letters of andere tekens bevatten!", L"Error: foutieve input", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		return;
 	}
 
