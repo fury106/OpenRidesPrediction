@@ -367,5 +367,6 @@ icon_v1.afphoto
 icon_v1.png
 *.iss
 installer files/*.bat
-installer files/*.tff
+installer files/*.ttf
+installer files/*.exe
 
