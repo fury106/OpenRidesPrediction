@@ -363,5 +363,9 @@ MigrationBackup/
 FodyWeavers.xsd
 
 debug.log
-.afphoto
-.png
+*.afphoto
+*.png
+*.iss
+installer files/*.bat
+*.tff
+

@@ -56,6 +56,7 @@ namespace OpenRidesPrediction {
 	private: System::Windows::Forms::CheckBox^ low_season_checkbox;
 	private: System::Windows::Forms::Button^ reset_button;
 	private: System::Windows::Forms::Button^ prediction_button;
+	private: System::Windows::Forms::Label^ label6;
 
 
 
@@ -90,6 +91,7 @@ namespace OpenRidesPrediction {
 			this->low_season_checkbox = (gcnew System::Windows::Forms::CheckBox());
 			this->reset_button = (gcnew System::Windows::Forms::Button());
 			this->prediction_button = (gcnew System::Windows::Forms::Button());
+			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
 			// label1
@@ -200,6 +202,7 @@ namespace OpenRidesPrediction {
 			this->low_season_checkbox->TabIndex = 10;
 			this->low_season_checkbox->Text = L"Het is laagseizoen";
 			this->low_season_checkbox->UseVisualStyleBackColor = true;
+			this->low_season_checkbox->Visible = false;
 			// 
 			// reset_button
 			// 
@@ -225,11 +228,24 @@ namespace OpenRidesPrediction {
 			this->prediction_button->UseVisualStyleBackColor = true;
 			this->prediction_button->Click += gcnew System::EventHandler(this, &MyForm::prediction_button_Click);
 			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Font = (gcnew System::Drawing::Font(L"Walibi0615", 12, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label6->Location = System::Drawing::Point(15, 84);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(656, 40);
+			this->label6->TabIndex = 13;
+			this->label6->Text = L"Deze app probeert te voorspellen hoe groot de kans is dat bepaalde\r\nattracties zu"
+				L"llen openen tijdens uw bezoek aan een pretpark.";
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(680, 563);
+			this->Controls->Add(this->label6);
 			this->Controls->Add(this->prediction_button);
 			this->Controls->Add(this->reset_button);
 			this->Controls->Add(this->low_season_checkbox);
