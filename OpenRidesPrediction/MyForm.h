@@ -38,14 +38,22 @@ namespace OpenRidesPrediction {
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::TextBox^ textBox2;
-	private: System::Windows::Forms::TextBox^ textBox3;
+	private: System::Windows::Forms::TextBox^ min_temp_field;
+	private: System::Windows::Forms::TextBox^ max_temp_field;
+	private: System::Windows::Forms::TextBox^ wind_field;
+
+
+
 	private: System::Windows::Forms::Label^ label5;
-	private: System::Windows::Forms::ListBox^ listBox1;
-	private: System::Windows::Forms::CheckBox^ checkBox1;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::ListBox^ ride_listbox;
+	private: System::Windows::Forms::CheckBox^ low_season_checkbox;
+	private: System::Windows::Forms::Button^ reset_button;
+	private: System::Windows::Forms::Button^ prediction_button;
+
+
+
+
+
 
 	protected:
 
@@ -66,14 +74,14 @@ namespace OpenRidesPrediction {
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
+			this->min_temp_field = (gcnew System::Windows::Forms::TextBox());
+			this->max_temp_field = (gcnew System::Windows::Forms::TextBox());
+			this->wind_field = (gcnew System::Windows::Forms::TextBox());
 			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
-			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->ride_listbox = (gcnew System::Windows::Forms::ListBox());
+			this->low_season_checkbox = (gcnew System::Windows::Forms::CheckBox());
+			this->reset_button = (gcnew System::Windows::Forms::Button());
+			this->prediction_button = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// label1
@@ -120,32 +128,32 @@ namespace OpenRidesPrediction {
 			this->label4->TabIndex = 3;
 			this->label4->Text = L"Wat is de voorspelde windkracht (in Bft)\?";
 			// 
-			// textBox1
+			// min_temp_field
 			// 
-			this->textBox1->Font = (gcnew System::Drawing::Font(L"Walibi0615", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->min_temp_field->Font = (gcnew System::Drawing::Font(L"Walibi0615", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->textBox1->Location = System::Drawing::Point(18, 164);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(177, 24);
-			this->textBox1->TabIndex = 4;
+			this->min_temp_field->Location = System::Drawing::Point(18, 164);
+			this->min_temp_field->Name = L"min_temp_field";
+			this->min_temp_field->Size = System::Drawing::Size(177, 24);
+			this->min_temp_field->TabIndex = 4;
 			// 
-			// textBox2
+			// max_temp_field
 			// 
-			this->textBox2->Font = (gcnew System::Drawing::Font(L"Walibi0615", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->max_temp_field->Font = (gcnew System::Drawing::Font(L"Walibi0615", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->textBox2->Location = System::Drawing::Point(18, 217);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(177, 24);
-			this->textBox2->TabIndex = 5;
+			this->max_temp_field->Location = System::Drawing::Point(18, 217);
+			this->max_temp_field->Name = L"max_temp_field";
+			this->max_temp_field->Size = System::Drawing::Size(177, 24);
+			this->max_temp_field->TabIndex = 5;
 			// 
-			// textBox3
+			// wind_field
 			// 
-			this->textBox3->Font = (gcnew System::Drawing::Font(L"Walibi0615", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->wind_field->Font = (gcnew System::Drawing::Font(L"Walibi0615", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->textBox3->Location = System::Drawing::Point(18, 269);
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(177, 24);
-			this->textBox3->TabIndex = 6;
+			this->wind_field->Location = System::Drawing::Point(18, 269);
+			this->wind_field->Name = L"wind_field";
+			this->wind_field->Size = System::Drawing::Size(177, 24);
+			this->wind_field->TabIndex = 6;
 			// 
 			// label5
 			// 
@@ -158,74 +166,87 @@ namespace OpenRidesPrediction {
 			this->label5->TabIndex = 7;
 			this->label5->Text = L"Selecteer de attractie waarvoor er een voorspelling gemaakt dient te worden.";
 			// 
-			// listBox1
+			// ride_listbox
 			// 
-			this->listBox1->Font = (gcnew System::Drawing::Font(L"Walibi0615", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->ride_listbox->Font = (gcnew System::Drawing::Font(L"Walibi0615", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->listBox1->FormattingEnabled = true;
-			this->listBox1->ItemHeight = 16;
-			this->listBox1->Location = System::Drawing::Point(18, 326);
-			this->listBox1->Name = L"listBox1";
-			this->listBox1->Size = System::Drawing::Size(381, 68);
-			this->listBox1->TabIndex = 9;
+			this->ride_listbox->FormattingEnabled = true;
+			this->ride_listbox->ItemHeight = 16;
+			this->ride_listbox->Items->AddRange(gcnew cli::array< System::Object^  >(8) {
+				L"The Ride to Happiness by Tomorrowland", L"Anubis The Ride",
+					L"Heidi The Ride", L"De Draak", L"K3 Rollerskater", L"#LikeMe Coaster", L"Nachtwacht Flyer", L"Andere attractie"
+			});
+			this->ride_listbox->Location = System::Drawing::Point(18, 326);
+			this->ride_listbox->Name = L"ride_listbox";
+			this->ride_listbox->Size = System::Drawing::Size(381, 68);
+			this->ride_listbox->TabIndex = 9;
 			// 
-			// checkBox1
+			// low_season_checkbox
 			// 
-			this->checkBox1->AutoSize = true;
-			this->checkBox1->Font = (gcnew System::Drawing::Font(L"Walibi0615", 11.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->low_season_checkbox->AutoSize = true;
+			this->low_season_checkbox->Font = (gcnew System::Drawing::Font(L"Walibi0615", 11.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->checkBox1->Location = System::Drawing::Point(18, 412);
-			this->checkBox1->Name = L"checkBox1";
-			this->checkBox1->Size = System::Drawing::Size(187, 23);
-			this->checkBox1->TabIndex = 10;
-			this->checkBox1->Text = L"Het is laagseizoen";
-			this->checkBox1->UseVisualStyleBackColor = true;
+			this->low_season_checkbox->Location = System::Drawing::Point(18, 412);
+			this->low_season_checkbox->Name = L"low_season_checkbox";
+			this->low_season_checkbox->Size = System::Drawing::Size(187, 23);
+			this->low_season_checkbox->TabIndex = 10;
+			this->low_season_checkbox->Text = L"Het is laagseizoen";
+			this->low_season_checkbox->UseVisualStyleBackColor = true;
 			// 
-			// button1
+			// reset_button
 			// 
-			this->button1->Font = (gcnew System::Drawing::Font(L"Walibi0615", 11.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->reset_button->Font = (gcnew System::Drawing::Font(L"Walibi0615", 11.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button1->Location = System::Drawing::Point(18, 455);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(197, 79);
-			this->button1->TabIndex = 11;
-			this->button1->Text = L"Reset formulier";
-			this->button1->UseVisualStyleBackColor = true;
+			this->reset_button->Location = System::Drawing::Point(18, 455);
+			this->reset_button->Name = L"reset_button";
+			this->reset_button->Size = System::Drawing::Size(197, 79);
+			this->reset_button->TabIndex = 11;
+			this->reset_button->Text = L"Reset formulier";
+			this->reset_button->UseVisualStyleBackColor = true;
+			this->reset_button->Click += gcnew System::EventHandler(this, &MyForm::reset_button_Click);
 			// 
-			// button2
+			// prediction_button
 			// 
-			this->button2->Font = (gcnew System::Drawing::Font(L"Walibi0615", 11.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->prediction_button->Font = (gcnew System::Drawing::Font(L"Walibi0615", 11.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button2->Location = System::Drawing::Point(471, 455);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(197, 79);
-			this->button2->TabIndex = 12;
-			this->button2->Text = L"Maak voorspelling";
-			this->button2->UseVisualStyleBackColor = true;
+			this->prediction_button->Location = System::Drawing::Point(471, 455);
+			this->prediction_button->Name = L"prediction_button";
+			this->prediction_button->Size = System::Drawing::Size(197, 79);
+			this->prediction_button->TabIndex = 12;
+			this->prediction_button->Text = L"Maak voorspelling";
+			this->prediction_button->UseVisualStyleBackColor = true;
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(680, 563);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
-			this->Controls->Add(this->checkBox1);
-			this->Controls->Add(this->listBox1);
+			this->Controls->Add(this->prediction_button);
+			this->Controls->Add(this->reset_button);
+			this->Controls->Add(this->low_season_checkbox);
+			this->Controls->Add(this->ride_listbox);
 			this->Controls->Add(this->label5);
-			this->Controls->Add(this->textBox3);
-			this->Controls->Add(this->textBox2);
-			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->wind_field);
+			this->Controls->Add(this->max_temp_field);
+			this->Controls->Add(this->min_temp_field);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Name = L"MyForm";
-			this->Text = L"MyForm";
+			this->Text = L"OpenRidesPrediction v2.0.0";
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	};
+	private: System::Void reset_button_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->min_temp_field->Text = "";
+		this->max_temp_field->Text = "";
+		this->wind_field->Text = "";
+		this->ride_listbox->Text = "";
+		this->low_season_checkbox->Checked = false;
+		this->ride_listbox->ClearSelected();
+	}
+};
 }
