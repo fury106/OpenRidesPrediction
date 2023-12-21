@@ -1,5 +1,10 @@
 #pragma once
 
+#include <iostream>
+#include <cctype>
+#include <string>
+#include "Ride.h"
+
 namespace OpenRidesPrediction {
 
 	using namespace System;
@@ -215,6 +220,7 @@ namespace OpenRidesPrediction {
 			this->prediction_button->TabIndex = 12;
 			this->prediction_button->Text = L"Maak voorspelling";
 			this->prediction_button->UseVisualStyleBackColor = true;
+			this->prediction_button->Click += gcnew System::EventHandler(this, &MyForm::prediction_button_Click);
 			// 
 			// MyForm
 			// 
@@ -248,5 +254,91 @@ namespace OpenRidesPrediction {
 		this->low_season_checkbox->Checked = false;
 		this->ride_listbox->ClearSelected();
 	}
+private: System::Void prediction_button_Click(System::Object^ sender, System::EventArgs^ e) {
+	//verify if all parameters are filled in
+	if (min_temp_field->Text == "") {
+		MessageBox::Show(L"Voer een minimumtemperatuur in!", L"Error: foutieve input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return;
+	}
+
+	if (max_temp_field->Text == "") {
+		MessageBox::Show(L"Voer een maximumtemperatuur in!", L"Error: foutieve input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return;
+	}
+
+	if (wind_field->Text == "") {
+		MessageBox::Show(L"Voer een windkracht in!", L"Error: foutieve input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return;
+	}
+
+	//verify if they are integers
+	System::String^ min_temp_str = min_temp_field->Text;
+	bool onlyDigitsTmin = true;
+	for each (char c in min_temp_str) {
+		if (!Char::IsDigit(c)) {
+			onlyDigitsTmin = false;
+			break;
+		}
+	}
+	if (onlyDigitsTmin == false) {
+		MessageBox::Show(L"De minimumtemperatuur kan enkel een geheel getal zijn en mag daarom geen letters of andere tekens bevatten!", L"Error: foutieve input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return;
+	}
+
+	System::String^ max_temp_str = max_temp_field->Text;
+	bool onlyDigitsTmax = true;
+	for each (char c in max_temp_str) {
+		if (!Char::IsDigit(c)) {
+			onlyDigitsTmax = false;
+			break;
+		}
+	}
+	if (onlyDigitsTmax == false) {
+		MessageBox::Show(L"De maximumtemperatuur kan enkel een geheel getal zijn en mag daarom geen letters of andere tekens bevatten!", L"Error: foutieve input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return;
+	}
+
+	System::String^ wind_str = wind_field->Text;
+	bool onlyDigitswind = true;
+	for each (char c in wind_str) {
+		if (!Char::IsDigit(c)) {
+			onlyDigitswind = false;
+			break;
+		}
+	}
+	if (onlyDigitswind == false) {
+		MessageBox::Show(L"De windkracht kan enkel een geheel getal zijn en mag daarom geen letters of andere tekens bevatten!", L"Error: foutieve input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return;
+	}
+
+	int Tmin = System::Convert::ToInt16(min_temp_field->Text);
+	int Tmax = System::Convert::ToInt16(max_temp_field->Text);
+	int windkracht = System::Convert::ToInt16(wind_field->Text);
+	bool laagseizoen = System::Convert::ToBoolean(low_season_checkbox->Checked);
+
+	if (Tmin > Tmax || windkracht < 0)
+	{
+		MessageBox::Show(L"Zorg er steeds voor dat de minimumtemperatuur die je opgeeft kleiner is dan de maximumtemperatuur, en dat de windkracht een positief getal is!", L"Error: foutieve input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return;
+	}
+
+	//verify if a ride is selected
+	if (this->ride_listbox->SelectedItem == nullptr) {
+		MessageBox::Show(L"Gelieve een attractie te selecteren!", L"Error: foutieve input", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		return;
+	}
+
+	String^ selectedRide = this->ride_listbox->SelectedItem->ToString();
+	string rideName;
+	using namespace Runtime::InteropServices;
+	const char* chars = (const char*)(Marshal::StringToHGlobalAnsi(selectedRide)).ToPointer();
+	rideName = chars;
+	Marshal::FreeHGlobal(IntPtr((void*)chars));
+
+
+	//do the actual calculation
+	vector<int> data = { Tmin, Tmax, windkracht };
+	Ride ride(rideName, data);
+}
 };
 }
