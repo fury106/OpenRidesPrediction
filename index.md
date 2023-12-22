@@ -1,0 +1,25 @@
+﻿﻿---
+title: OpenRidesPrediction
+subtitle: About the OpenRidesPrediction app
+hero_image: https://fury106.github.io/img/hero_banner.png
+---
+<html>
+<head>
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="c28446f3-a71f-463a-aa45-61d022871281" data-blockingmode="auto" type="text/javascript"></script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZJGHDFE3XH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ZJGHDFE3XH');
+</script>
+   
+</head>
+<body>
+<p>OpenRidesPrediction is a simple C++ desktop app which calculates the probability that certain rides at certain theme parks will open depending the (extreme) weather conditions. At this moment, only one park (Plopsaland De Panne) is supported, but in the future more parks will be added to the app. The app is currently only available in dutch, but more languages will be added in the future.</p>
+
+</body>
+</html>
